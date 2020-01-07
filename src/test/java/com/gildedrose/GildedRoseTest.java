@@ -36,4 +36,13 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(0, app.items[0].quality);
     }
+
+    @Test
+    void ensures_standard_product_sellIn_decreases_by_one(){
+        Item[] items = new Item[] { new Item("foo", 0, 0)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(-1, app.items[0].sellIn);
+    }
+
 }
