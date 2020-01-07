@@ -21,4 +21,11 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(2, app.items[0].quality);
     }
+    @Test
+    void ensures_standard_product_quality_decreases_by_two_if_sellIn_is_0() {
+        Item[] items = new Item[] { new Item("foo", 0, 10)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(8, app.items[0].quality);
+    }
 }
