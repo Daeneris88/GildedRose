@@ -85,6 +85,14 @@ class GildedRoseTest {
         assertEquals(21,app.items[0].quality);
     }
 
+    @Test
+    void ensures_Aged_Brie_quality_remains_if_sellIn_is_less_than_zero_and_quality_over_49(){
+        Item[] items = new Item[] { new Item("Aged Brie", -2,50)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50,app.items[0].quality);
+    }
+
 
     @Test
     void ensures_Aged_Brie_quality_remains_when_quality_over_49() {
