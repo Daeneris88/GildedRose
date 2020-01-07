@@ -15,17 +15,25 @@ class GildedRoseTest {
     }
 
     @Test
-    void ensures_standard_product_quality_decreases_by_one_if_sellIn_is_greater_than_0() {
+    void ensures_standard_product_quality_decreases_by_one_if_sellIn_is_greater_than_zero() {
         Item[] items = new Item[] { new Item("foo", 10, 3)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(2, app.items[0].quality);
     }
     @Test
-    void ensures_standard_product_quality_decreases_by_two_if_sellIn_is_0() {
+    void ensures_standard_product_quality_decreases_by_two_if_sellIn_is_zero() {
         Item[] items = new Item[] { new Item("foo", 0, 10)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(8, app.items[0].quality);
+    }
+    
+    @Test
+    void ensures_standard_product_quality_cannot_drop_below_zero(){
+        Item[] items = new Item[] { new Item("foo", 0, 0)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(0, app.items[0].quality);
     }
 }
