@@ -76,4 +76,13 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(21,app.items[0].quality);
     }
+
+    @Test
+    void ensures_Aged_Brie_sellIn_decreases_1(){
+        Item[] items = new Item[] { new Item("Aged Brie", 10,20)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(9,app.items[0].sellIn);
+    }
+
 }
