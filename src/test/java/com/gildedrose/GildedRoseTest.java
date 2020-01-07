@@ -21,6 +21,7 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(2, app.items[0].quality);
     }
+
     @Test
     void ensures_standard_product_quality_decreases_by_two_if_sellIn_is_zero() {
         Item[] items = new Item[] { new Item("foo", 0, 10)};
@@ -77,6 +78,15 @@ class GildedRoseTest {
         assertEquals(21,app.items[0].quality);
     }
 
+
+    @Test
+    void ensures_Aged_Brie_quality_remains_when_quality_over_49() {
+        Item[] items = new Item[] { new Item("Aged Brie", 10, 50)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50, app.items[0].quality);
+    }
+
     @Test
     void ensures_Aged_Brie_sellIn_decreases_1(){
         Item[] items = new Item[] { new Item("Aged Brie", 10,20)};
@@ -114,5 +124,15 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(0, app.items[0].quality);
     }
+
+    @Test
+    void ensures_backstagePass_quality_remains_when_quality_over_49() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50, app.items[0].quality);
+    }
+
+
 
 }
