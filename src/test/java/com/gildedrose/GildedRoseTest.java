@@ -63,6 +63,13 @@ class GildedRoseTest {
     }
 
     @Test
+    void ensures_Sulfuras_sellIn_never_changes_when_sellIn_is_less_than_zero(){
+        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros",-3,80)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(-3, app.items[0].sellIn);
+    }
+    @Test
     void ensures_Aged_Brie_quality_increases_2_if_sellIn_is_less_than_1(){
         Item[] items = new Item[] { new Item("Aged Brie", 0,20)};
         GildedRose app = new GildedRose(items);
@@ -126,13 +133,19 @@ class GildedRoseTest {
     }
 
     @Test
-    void ensures_backstagePass_quality_remains_when_quality_over_49() {
+    void ensures_backstagePass_quality_remains_when_quality_over_49_and_sellIn_less_than_11_and_greater_than_5() {
         Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(50, app.items[0].quality);
     }
 
-
+    @Test
+    void ensures_backstagePass_quality_remains_when_quality_over_49_and_sellIn_less_than_6() {
+        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50, app.items[0].quality);
+    }
 
 }
