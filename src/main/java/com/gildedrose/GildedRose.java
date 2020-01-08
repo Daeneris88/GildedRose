@@ -1,6 +1,14 @@
 package com.gildedrose;
 
 class GildedRose {
+    private static final String AGED_BRIE = "Aged Brie";
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+    private static final int MAX_STANDARD_QUALITY = 50;
+    private static final int MEDIUM_EXPIRATION = 11;
+    private static final int LOW_EXPIRATION = 6;
+    private static final int MIN_QUALITY = 0;
+    private static final int EXPIRY_DATE = 0;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -8,58 +16,55 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            final Item currentItem = items[i];
-            if (!currentItem.name.equals("Aged Brie")
-                    && !currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (currentItem.quality > 0) {
-                    if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
-                        decreaseQuality(currentItem);
+        for (final Item currentItem : items) {
+            if (isAgedBrie(currentItem) || isBackstagePass(currentItem)) {
+                if (isBelowMaxQuality(currentItem)) {
+                    increaseQuality(currentItem);
+                    if (isBackstagePass(currentItem)) {
+                        if (currentItem.sellIn < MEDIUM_EXPIRATION && isBelowMaxQuality(currentItem)) increaseQuality(currentItem);
+                        if (currentItem.sellIn < LOW_EXPIRATION && isBelowMaxQuality(currentItem)) increaseQuality(currentItem);
                     }
                 }
             } else {
-                if (currentItem.quality < 50) {
-                    increaseQuality(currentItem);
-
-                    if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (currentItem.sellIn < 11) {
-                            increaseQualityWhenBelow50(currentItem);
-                        }
-
-                        if (currentItem.sellIn < 6) {
-                            increaseQualityWhenBelow50(currentItem);
-                        }
-                    }
+                if (currentItem.quality > MIN_QUALITY && !isSulfuras(currentItem)) {
+                    decreaseQuality(currentItem);
                 }
             }
 
-            if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
-                decreaseSellIn(currentItem);
-            }
+            if (!isSulfuras(currentItem)) decreaseSellIn(currentItem);
 
-            if (currentItem.sellIn < 0) {
-                if (!currentItem.name.equals("Aged Brie")) {
-                    if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (currentItem.quality > 0) {
-                            if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (currentItem.sellIn < EXPIRY_DATE) {
+                if (!isAgedBrie(currentItem)) {
+                    if (!isBackstagePass(currentItem)) {
+                        if (currentItem.quality > MIN_QUALITY) {
+                            if (!isSulfuras(currentItem)) {
                                 decreaseQuality(currentItem);
                             }
                         }
                     } else {
-                        currentItem.quality = 0;
+                        currentItem.quality = MIN_QUALITY;
                     }
                 } else {
-                    increaseQualityWhenBelow50(currentItem);
+                    if(isBelowMaxQuality(currentItem)) increaseQuality(currentItem);
                 }
             }
-
         }
     }
 
-    private void increaseQualityWhenBelow50(Item currentItem) {
-        if (currentItem.quality < 50) {
-            increaseQuality(currentItem);
-        }
+    private boolean isBelowMaxQuality(Item currentItem) {
+        return currentItem.quality < MAX_STANDARD_QUALITY;
+    }
+
+    private boolean isSulfuras(Item currentItem) {
+        return currentItem.name.equals(SULFURAS);
+    }
+
+    private boolean isBackstagePass(Item currentItem) {
+        return currentItem.name.equals(BACKSTAGE);
+    }
+
+    private boolean isAgedBrie(Item currentItem) {
+        return currentItem.name.equals(AGED_BRIE);
     }
 
     private void decreaseSellIn(Item currentItem) {
