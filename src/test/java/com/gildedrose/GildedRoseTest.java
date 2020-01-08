@@ -173,4 +173,12 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(50, app.items[0].quality);
     }
+
+    @Test
+    void ensures_backstagePass_quality_grows_two_when_sellIn_less_than_6(){
+        Item[] items = new Item [] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, 48)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(50, app.items[0].quality);
+    }
 }
