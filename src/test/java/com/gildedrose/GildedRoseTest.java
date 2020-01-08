@@ -14,6 +14,7 @@ class GildedRoseTest {
         assertEquals("foo", app.items[0].name);
     }
 
+
     @Test
     void ensures_standard_product_quality_decreases_by_one_if_sellIn_is_greater_than_zero() {
         Item[] items = new Item[] { new Item("foo", 10, 3)};
