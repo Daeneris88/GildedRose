@@ -1,6 +1,5 @@
 package com.gildedrose;
 
-import org.approvaltests.Approvals;
 import org.approvaltests.combinations.CombinationApprovals;
 import org.junit.Test;
 
@@ -10,7 +9,7 @@ public class GildedRoseTest {
 
     @Test
     public void foo() {
-        Item[] items = new Item[] { new Item("foo", 0, 0) };
+        Item[] items = new Item[] {Item.createItem("foo", 0, 0)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("foo", app.items[0].name);
@@ -20,7 +19,7 @@ public class GildedRoseTest {
                 new Integer[] {0,  5, 2, 51, 49, 48, 50});
     }
     private String doUpdateQuality(String name, int sellIn, int quality) {
-        Item[] items = new Item[] { new Item(name, sellIn, quality) };
+        Item[] items = new Item[] {Item.createItem(name, sellIn, quality)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         return app.items[0].toString();
